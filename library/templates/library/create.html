@@ -3,20 +3,23 @@
 {% block title %}Create Author{% endblock %}
 
 {% block content %}
-    <form action="create/" method="post">
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name">
+    <form id="create" action="#" method="post">
+    {% csrf_token %}
+        <div>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name">
+        </div>
+        <div>
+            <label for="surname">Surname</label>
+            <input type="text" id="surname" name="'surname">
+        </div>
+
+        <div>
+            <label for="year">Year</label>
+            <input type="text" id="year" name="year">
+        </div>
     </form>
 
-    <form action="create/" method="post">
-        <label for="surname">Surname</label>
-        <input type="text" id="surname" name="'surname">
-    </form>
-
-    <form action="create/" method="post">
-        <label for="year">Year</label>
-        <input type="text" id="year" name="year">
-    </form>
-
+    <button type="submit" form="create">Create</button>
 
 {% endblock %}

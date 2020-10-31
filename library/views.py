@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views import View
+from django.http import HttpResponse
 
 
 # Create your views here.
@@ -13,7 +14,11 @@ class CreateView(View):
         return render(request, 'library/create.html')
 
     def post(self, request):
-        pass
+        data = request.POST
+        print(data)
+        print(data['name'])
+        return HttpResponse()
+
 
 
 class AuthorsView(View):

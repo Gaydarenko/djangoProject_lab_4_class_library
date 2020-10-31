@@ -6,17 +6,18 @@
     <form id="create" action="#" method="post">
     {% csrf_token %}
         <div>
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name">
+{#            for & id = xxx_1 - _1 добавлено для того чтобы помнить, что именно они связаны#}
+            <label for="name_1">Name</label>
+            <input type="text" id="name_1" name="name">
         </div>
         <div>
-            <label for="surname">Surname</label>
-            <input type="text" id="surname" name="'surname">
+            <label for="surname_1">Surname</label>
+            <input type="text" id="surname_1" name="'surname">
         </div>
 
         <div>
-            <label for="year">Year</label>
-            <input type="text" id="year" name="year">
+            <label for="year_1">Year</label>
+            <input type="text" id="year_1" name="year">
         </div>
     </form>
 

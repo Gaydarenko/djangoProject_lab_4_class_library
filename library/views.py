@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.views import View
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest
+from .models import Author
+from html import escape
 
 
 # Create your views here.
@@ -15,12 +17,27 @@ class CreateView(View):
 
     def post(self, request):
         data = request.POST
-        print(data)
-        print(data['name'])
-        return HttpResponse()
-
+        try:
+            author = Author(
+                name=data['name'],
+                surname=data['surname'],
+                year=data['year']
+            )
+            author.save()
+        except Exception:
+            return HttpResponseBadRequest("Bad request")
+        return HttpResponse(escape(author.name))    # escape для экранирования, если вдруг вместо имени кто-то будет
+                                                    # передавать ссылку (чтобы ссылка не работала)
 
 
 class AuthorsView(View):
     def get(self, request):
-        return render(request, 'library/authors.html')
+        authors = Author.objects.all()
+        return render(request, 'library/authors.html', context={'authors': authors})
+
+
+class CreateFormView(View):
+    def get(self, request):
+        return render(request, 'library/create_form.html')
+
+

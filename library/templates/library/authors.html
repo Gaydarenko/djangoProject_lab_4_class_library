@@ -4,4 +4,21 @@
 
 {% block content %}
 
+    <table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Год рождения</th>
+    </tr>
+        {% for author in authors %}
+            <tr>
+                <td>{{ author.id }}</td>
+                <td>{{ author.name|upper }}</td>
+                <td>{{ author.surname }}</td>
+                <td>{{ author.year }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
 {% endblock %}

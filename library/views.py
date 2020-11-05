@@ -3,7 +3,7 @@ from django.views import View
 from django.http import HttpResponse, HttpResponseBadRequest
 from .models import Author
 from html import escape
-from .forms import AuthorForm
+from .forms import AuthorForm, BookForm
 
 
 # Create your views here.
@@ -14,7 +14,7 @@ class LibraryView(View):
 
 class CreateView(View):
     def get(self, request):
-        return render(request, 'library/create.html')
+        return render(request, 'library/create_author.html')
 
     def post(self, request):
         data = request.POST
@@ -40,7 +40,7 @@ class AuthorsView(View):
 class CreateFormView(View):
     def get(self, request):
         author_form = AuthorForm()
-        return render(request, 'library/create_form.html', context={'author_form': author_form})
+        return render(request, 'library/create_author_form.html', context={'author_form': author_form})
 
     def post(self, request):
         author_form = AuthorForm(request.POST)
@@ -56,3 +56,9 @@ class CreateFormView(View):
 class SearchView(View):
     def get(self, request):
         return HttpResponse('1')
+
+
+class BookView(View):
+    def get(self, request):
+        create_book_form = BookForm()
+        return render(request, 'library/create_book.html', context={'create_book_form': create_book_form})

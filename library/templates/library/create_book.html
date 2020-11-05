@@ -1,0 +1,12 @@
+{% extends 'library/base.html' %}
+
+{% block title %}Create Book{% endblock %}
+
+{% block content %}
+    <form id="create-book" action="#" method="post">
+        {% csrf_token %}
+        {{ create_book_form.as_p }}
+        {#    .as_p для того чтобы переменные вывелись в столбец, а не в строку#}
+    </form>
+    <p><button type="submit" form="create-book">Create book</button></p>
+{% endblock %}

@@ -62,3 +62,10 @@ class BookView(View):
     def get(self, request):
         create_book_form = BookForm()
         return render(request, 'library/create_book.html', context={'create_book_form': create_book_form})
+
+    def post(self, request):
+        create_book_form = BookForm(request.POST)
+        if not create_book_form.is_valid():
+            return HttpResponseBadRequest("Некорректные данные")
+
+        book = B

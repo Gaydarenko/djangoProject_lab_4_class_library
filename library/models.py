@@ -7,3 +7,11 @@ class Author(models.Model):
     name = models.TextField()
     surname = models.TextField()
     year = models.IntegerField()
+
+
+class Book(models.Model):
+    id = models.IntegerField(primary_key=True)
+    title = models.CharField(max_length=30)
+    genre = models.CharField(max_length=15)
+    year = models.IntegerField()
+    annotation = models.TextField()

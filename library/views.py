@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views import View
 from django.http import HttpResponse, HttpResponseBadRequest
-from .models import Author
+from .models import Author, Book
 from html import escape
 from .forms import AuthorForm, BookForm
 
@@ -58,7 +58,7 @@ class SearchView(View):
         return HttpResponse('1')
 
 
-class BookView(View):
+class BookFormView(View):
     def get(self, request):
         create_book_form = BookForm()
         return render(request, 'library/create_book.html', context={'create_book_form': create_book_form})
@@ -68,4 +68,8 @@ class BookView(View):
         if not create_book_form.is_valid():
             return HttpResponseBadRequest("Некорректные данные")
 
-        book = B
+        data = create_book_form.cleaned_data
+        print(data)
+        book = Book(**data)
+        book.save()
+        return HttpResponse(escape(book.title))

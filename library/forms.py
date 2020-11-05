@@ -8,7 +8,7 @@ class AuthorForm(forms.Form):
 
 
 class BookForm(forms.Form):
-    name = forms.CharField(label='Название')
-    surname = forms.CharField(label='Жанр')
-    year = forms.IntegerField(label='Год рождения')
+    title = forms.CharField(label='Название')
+    genre = forms.CharField(label='Жанр')
+    year = forms.IntegerField(label='Год')
     annotation = forms.CharField(label='Аннотация')

@@ -51,3 +51,8 @@ class CreateFormView(View):
         author = Author(**data)
         author.save()
         return HttpResponse(escape(author.name))
+
+
+class SearchView(View):
+    def get(self, request):
+        return HttpResponse('1')

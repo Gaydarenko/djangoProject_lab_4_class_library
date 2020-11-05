@@ -3,6 +3,7 @@ from django.views import View
 from django.http import HttpResponse, HttpResponseBadRequest
 from .models import Author
 from html import escape
+from .forms import AuthorForm
 
 
 # Create your views here.
@@ -38,6 +39,15 @@ class AuthorsView(View):
 
 class CreateFormView(View):
     def get(self, request):
-        return render(request, 'library/create_form.html')
+        author_form = AuthorForm()
+        return render(request, 'library/create_form.html', context={'author_form': author_form})
 
+    def post(self, request):
+        author_form = AuthorForm(request.POST)
+        if not author_form.is_valid():
+            return HttpResponseBadRequest("Bad request")
 
+        data = author_form.cleaned_data     # cleaned_data - только валидные данные
+        author = Author(**data)
+        author.save()
+        return HttpResponse(escape(author.name))

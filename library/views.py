@@ -1,9 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.views import View
 from django.http import HttpResponse, HttpResponseBadRequest
-from .models import Author, Book
+from django.core.paginator import Paginator, EmptyPage
 from html import escape
+from .models import Author, Book
 from .forms import AuthorForm, BookForm
+import json
+
 
 
 # Create your views here.
@@ -76,9 +80,19 @@ class BookFormView(View):
 
 
 class BooksView(View):
-    def get(self, request):
-        books = Book.objects.all()
-        return render(request, 'library/books.html', context={'books': books})
+    def get(self, request, page=1):
+        books_on_list = 4
+        books_list = list(Book.objects.values())
+        for _ in range(9):
+            print("!!!!!!!!!!!!!!!!!!!!!")
+        print(books_list)
+        paginator = Paginator(books_list, books_on_list)
+        try:
+            books_list = paginator.page(page)
+            books_list.count_pages = [i for i in range(1, paginator.num_pages + 1)]
+        except EmptyPage:
+            return redirect(reverse('books'))
+        return render(request, 'library/books.html', context={'books_list': books_list})
 
 
 class BookView(View):

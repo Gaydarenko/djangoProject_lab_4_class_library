@@ -9,5 +9,6 @@ urlpatterns = [
     path('search/', SearchView.as_view(), name='search'),
     path('create_book/', BookFormView.as_view(), name='create-book'),
     path('books/', BooksView.as_view(), name='books'),
+    path('books/<int:page>', BooksView.as_view()),
     path('book/', BookView.as_view(), name='book'),
 ]

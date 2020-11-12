@@ -3,6 +3,30 @@
 {% block title %}Book List{% endblock %}
 
 {% block content %}
+
+<head>
+<style>
+.pagination {
+  display: inline-block;
+}
+
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+.pagination a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.pagination a:hover:not(.active) {background-color: #ddd;}
+</style>
+</head>
+
+
     <table border="1">
     <tr>
         <th>ID</th>
@@ -10,7 +34,7 @@
         <th>Жанр</th>
         <th>Год</th>
     </tr>
-        {% for book in books %}
+        {% for book in books_list %}
             <tr>
                 <td>{{ book.id }}</td>
                 <td><a href="/book/{{ book.id }}">{{ book.title}}</a></td>
@@ -19,4 +43,23 @@
             </tr>
         {% endfor %}
     </table>
+
+    <div class="pagination">
+        {% if books_list.has_previous %}
+            <a href="{% url 'books' %}{{ books_list.previous_page_number }}">&laquo;</a>
+        {% endif %}
+
+        {% for page in books_list.count_pages %}
+            {% if forloop.counter == books_list.number %}
+                <a class="active"><span>{{ page }}</span></a>
+            {% else %}
+                <a href="{% url 'books' %}{{ page }}">{{ page }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if books_list.has_next %}
+            <a href="{% url 'books' %}{{ books_list.next_page_number }}">&raquo;</a>
+        {% endif %}
+    </div>
+
 {% endblock %}

@@ -73,3 +73,14 @@ class BookFormView(View):
         book = Book(**data)
         book.save()
         return HttpResponse(escape(book.title))
+
+
+class BooksView(View):
+    def get(self, request):
+        books = Book.objects.all()
+        return render(request, 'library/books.html', context={'books': books})
+
+
+class BookView(View):
+    def get(self, request):
+        return render(request, 'library/book.html')

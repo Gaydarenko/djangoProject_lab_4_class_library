@@ -66,6 +66,12 @@ class CreateAuthorFormView(View):
         return HttpResponse(escape(author.name))
 
 
+class AuthorView(View):
+    def get(self, request, id=1):
+        author = Author.objects.get(pk=id)
+        return render(request, 'library/author.html', context={'author': author})
+
+
 class SearchView(View):
     def get(self, request):
         return HttpResponse('1')

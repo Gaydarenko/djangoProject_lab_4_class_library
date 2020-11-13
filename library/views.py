@@ -104,5 +104,6 @@ class BooksView(View):
 
 
 class BookView(View):
-    def get(self, request):
-        return render(request, 'library/book.html')
+    def get(self, request, id=1):
+        book = Book.objects.get(pk=id)
+        return render(request, 'library/book.html', context={'book': book})

@@ -12,4 +12,5 @@ urlpatterns = [
     path('books/', BooksView.as_view(), name='books'),
     path('books/<int:page>', BooksView.as_view()),
     path('book/', BookView.as_view(), name='book'),
+    path('book/<int:id>', BookView.as_view()),
 ]

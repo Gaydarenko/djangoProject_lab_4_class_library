@@ -35,7 +35,7 @@ class CreateView(View):
                                                     # передавать ссылку (чтобы ссылка не работала)
 
 
-class AuthorsView(View):
+class AuthorsListView(View):
     def get(self, request, page=1):
         authors_on_list = 4
         authors = list(Author.objects.values())
@@ -88,7 +88,7 @@ class BookFormView(View):
         return HttpResponse(escape(book.title))
 
 
-class BooksView(View):
+class BooksListView(View):
     def get(self, request, page=1):
         books_on_list = 4
         books_list = list(Book.objects.values())

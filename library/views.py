@@ -83,15 +83,14 @@ class BooksView(View):
     def get(self, request, page=1):
         books_on_list = 4
         books_list = list(Book.objects.values())
-        for _ in range(9):
-            print("!!!!!!!!!!!!!!!!!!!!!")
-        print(books_list)
         paginator = Paginator(books_list, books_on_list)
+
         try:
             books_list = paginator.page(page)
             books_list.count_pages = [i for i in range(1, paginator.num_pages + 1)]
         except EmptyPage:
             return redirect(reverse('books'))
+
         return render(request, 'library/books.html', context={'books_list': books_list})
 
 

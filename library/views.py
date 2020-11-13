@@ -1,13 +1,13 @@
+from html import escape
+
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.core.paginator import Paginator, EmptyPage
-from html import escape
+
 from .models import Author, Book
 from .forms import AuthorForm, BookForm
-import json
-
 
 
 # Create your views here.
@@ -36,8 +36,17 @@ class CreateView(View):
 
 
 class AuthorsView(View):
-    def get(self, request):
-        authors = Author.objects.all()
+    def get(self, request, page=1):
+        authors_on_list = 4
+        authors = list(Author.objects.values())
+        paginator = Paginator(authors, authors_on_list)
+
+        try:
+            authors = paginator.page(page)
+            authors.pages = tuple(paginator.page_range)
+        except EmptyPage:
+            return redirect(reverse('authors'))
+
         return render(request, 'library/authors.html', context={'authors': authors})
 
 

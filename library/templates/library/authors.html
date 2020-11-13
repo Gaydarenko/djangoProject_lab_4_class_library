@@ -4,6 +4,29 @@
 
 {% block content %}
 
+<head>
+<style>
+.pagination {
+  display: inline-block;
+}
+
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+.pagination a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.pagination a:hover:not(.active) {background-color: #ddd;}
+</style>
+</head>
+
+
     <table border="1">
     <tr>
         <th>ID</th>
@@ -21,4 +44,20 @@
         {% endfor %}
     </table>
 
+    <div class="pagination">
+            {% if authors.has_previous %}
+                <a href="{% url 'authors' %}{{ authors.previous_page_number }}">&laquo;</a>
+            {% endif %}
+
+            {% for page in authors.pages %}
+                {% if forloop.counter == authors.number %}
+                    <a class="active"><span>{{ page }}</span></a>
+                {% else %}
+                    <a href="{% url 'authors' %}{{ page }}">{{ page }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if authors.has_next %}
+                <a href="{% url 'authors' %}{{ authors.next_page_number }}">&raquo;</a>
+            {% endif %}
 {% endblock %}

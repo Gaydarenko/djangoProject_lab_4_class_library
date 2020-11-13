@@ -16,7 +16,7 @@ class LibraryView(View):
         return render(request, 'library/index.html')
 
 
-class CreateView(View):
+class CreateAuthorView(View):
     def get(self, request):
         return render(request, 'library/create_author.html')
 
@@ -50,7 +50,7 @@ class AuthorsListView(View):
         return render(request, 'library/authors.html', context={'authors': authors})
 
 
-class CreateFormView(View):
+class CreateAuthorFormView(View):
     def get(self, request):
         author_form = AuthorForm()
         return render(request, 'library/create_author_form.html', context={'author_form': author_form})
@@ -71,7 +71,7 @@ class SearchView(View):
         return HttpResponse('1')
 
 
-class BookFormView(View):
+class CreateBookFormView(View):
     def get(self, request):
         create_book_form = BookForm()
         return render(request, 'library/create_book.html', context={'create_book_form': create_book_form})

@@ -7,7 +7,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.core.paginator import Paginator, EmptyPage
 
 from .models import Author, Book
-from .forms import AuthorForm, BookForm
+from .forms import AuthorForm, BookForm, SearchForm
 
 
 # Create your views here.
@@ -74,7 +74,24 @@ class AuthorView(View):
 
 class SearchView(View):
     def get(self, request):
-        return HttpResponse('1')
+        search_form = SearchForm()
+        return render(request, 'library/search.html', context={'search_form': search_form})
+
+    def post(self, request):
+        search_form = SearchForm(request.POST)
+        query = Book.objects.values()
+        if search_form.data['title']:
+            query = query.filter(title=search_form.data['title'])
+        if search_form.data['genre']:
+            query = query.filter(genre=search_form.data['genre'])
+        if search_form.data['year']:
+            query = query.filter(year=search_form.data['year'])
+        books_list = query.all()
+
+        if isinstance(books_list, dict):
+            books_list = [books_list, ]
+
+        return render(request, 'library/books.html', context={'books_list': books_list})
 
 
 class CreateBookFormView(View):
@@ -98,6 +115,7 @@ class BooksListView(View):
     def get(self, request, page=1):
         books_on_list = 4
         books_list = list(Book.objects.values())
+        print(books_list)
         paginator = Paginator(books_list, books_on_list)
 
         try:

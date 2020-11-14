@@ -3,6 +3,10 @@
 {% block title %}Search{% endblock %}
 
 {% block content %}
-
+    <form id="search-book" action="#" method="post">
+        {% csrf_token %}
+        {{ search_form.as_p }}
+    </form>
+    <p><button type="submit" form="search-book">Search</button></p>
 
 {% endblock %}
